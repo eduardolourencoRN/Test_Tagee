@@ -1,7 +1,7 @@
 {
     "expo": {
         "splash": {
-            "image": "./splash.jpeg",
+            "image": "./splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },

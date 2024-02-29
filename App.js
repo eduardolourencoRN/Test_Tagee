@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import CustomSplashScreen from './src/screens/splashScreen/index';
 import LoginScreen from './src/screens/Login';
-import * as SplashScreen from 'expo-splash-screen';
-
-SplashScreen.preventAutoHideAsync();
+import { preventAutoHideAsync } from 'expo-splash-screen';
 
 export default function App() {
-    useEffect(() => {
-        setTimeout(async () => {
-            await SplashScreen.hideAsync();
-        }, 3000);
-    }, []);
-
     return <LoginScreen />;
 }
