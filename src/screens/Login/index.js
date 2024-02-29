@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import Constants from 'expo-constants';
+import Axios from 'axios';
+import authenticate from '../../services/auth';
 const LoginScreen = () => {
-    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [userCredentials, setUserCredentials] = useState([]);
     const {
         containerSafeAreaView,
         container,
@@ -30,19 +31,18 @@ const LoginScreen = () => {
         TitleButtonEnter,
         TitleForgotPassWord,
     } = styles;
-    const handleLogin = () => {
-        if (email.trim() !== '' && password.trim() !== '') {
-            const newUser = { email: email, password: password };
-            setUserCredentials([...userCredentials, newUser]);
-            setEmail('');
-            setPassword('');
-            Alert.alert('Login Bem-sucedido');
-        } else {
-            Alert.alert('Por favor, preencha todos os campos');
+    const device = Constants.deviceName;
+    console.log(device);
+
+    const handleLogin = async () => {
+        try {
+            await authenticate(userName, password, device);
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+            Alert.alert('Erro', 'Ocorreu um erro ao fazer login');
         }
     };
 
-    console.log(userCredentials);
     return (
         <SafeAreaView style={containerSafeAreaView}>
             <View style={container}>
@@ -65,9 +65,9 @@ const LoginScreen = () => {
                         <Text style={title}>E-mail</Text>
                         <TextInput
                             style={input}
-                            placeholder='exemplo@123.com'
-                            onChangeText={setEmail}
-                            value={email}
+                            placeholder='username'
+                            onChangeText={setUserName}
+                            value={userName}
                             keyboardType='email-address'
                             placeholderTextColor='#B5BDC7'
                         />
