@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ViewContainerInput: {
-        width: '100%',
+        width: widthScreen,
         height: 80,
         alignItems: 'center',
     },
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
         fontSize: 15,
     },
     ButtonBack: {
-        width: '100%',
+        width: widthScreen,
         height: 35,
         position: 'absolute',
         left: 20,
