@@ -13,6 +13,7 @@ const authenticate = async (username, password, device) => {
         console.log(response.data);
 
         if (response.status === 200) {
+            console.log(response);
             Alert.alert('Login bem-sucedido!');
             return response.data;
         } else {

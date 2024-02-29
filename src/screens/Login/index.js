@@ -11,11 +11,13 @@ import {
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Constants from 'expo-constants';
-import Axios from 'axios';
 import authenticate from '../../services/auth';
+
 const LoginScreen = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+    const device = Constants.deviceName;
     const {
         containerSafeAreaView,
         container,
@@ -31,15 +33,14 @@ const LoginScreen = () => {
         TitleButtonEnter,
         TitleForgotPassWord,
     } = styles;
-    const device = Constants.deviceName;
-    console.log(device);
 
     const handleLogin = async () => {
         try {
             await authenticate(userName, password, device);
+            setErrorMessage(null);
         } catch (error) {
             console.error('Erro ao fazer login:', error);
-            Alert.alert('Erro', 'Ocorreu um erro ao fazer login');
+            setErrorMessage('Credenciais inválidasx');
         }
     };
 
@@ -83,6 +84,11 @@ const LoginScreen = () => {
                             secureTextEntry
                             placeholderTextColor='#B5BDC7'
                         />
+                        {errorMessage && (
+                            <Text style={{ color: 'red', fontSize: 12 }}>
+                                {errorMessage}
+                            </Text>
+                        )}
                         <TouchableOpacity
                             activeOpacity={0.6}
                             style={ButtonForgotPassWords}
