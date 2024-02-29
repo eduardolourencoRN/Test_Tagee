@@ -1,10 +1,13 @@
 {
-  "expo": {
-    "name": "TageeTest",
-    "slug": "TageeTest",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  }
+    "expo": {
+        "splash": {
+            "image": "./splash.jpeg",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "name": "TageeTest",
+        "slug": "TageeTest",
+        "version": "1.0.0",
+        "assetBundlePatterns": ["**/*"]
+    }
 }
