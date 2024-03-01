@@ -17,7 +17,8 @@ const authenticate = async (username, password, device) => {
             Alert.alert('Login bem-sucedido!');
             return response.data;
         } else {
-            console.error('Erro ao fazer login:', response.data.message);
+            console.error('Erro ao fazer login:', response.data.errors);
+            console.log('ffffff', response.data.messages);
             throw new Error('Erro ao fazer login');
         }
     } catch (error) {

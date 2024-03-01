@@ -6,14 +6,15 @@ import {
     TouchableOpacity,
     Image,
     SafeAreaView,
-    Alert,
+    Keyboard,
 } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Constants from 'expo-constants';
 import authenticate from '../../services/auth';
+import { useNavigation } from '@react-navigation/native';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
@@ -28,20 +29,53 @@ const LoginScreen = () => {
         ViewContainerInput,
         input,
         title,
-        ButtonForgotPassWords,
+        ButtonForgotPassWord,
         Button,
         TitleButtonEnter,
         TitleForgotPassWord,
     } = styles;
 
+    const { reset } = useNavigation();
+
     const handleLogin = async () => {
         try {
             await authenticate(userName, password, device);
             setErrorMessage(null);
+            reset({
+                index: 0,
+                routes: [{ name: 'Schedulings' }],
+            });
+            Keyboard.dismiss();
         } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            setErrorMessage('Credenciais inválidasx');
+            if (error.response) {
+                const responseData = error.response.data;
+                console.error('Erro ao fazer login:', responseData);
+                if (
+                    responseData &&
+                    responseData.errors &&
+                    responseData.errors.username
+                ) {
+                    setErrorMessage(responseData.errors.username[0]);
+                } else if (responseData && responseData.message) {
+                    setErrorMessage(responseData.message);
+                } else {
+                    setErrorMessage('Credenciais inválidas');
+                }
+            } else {
+                console.error('Erro ao fazer login:', error);
+                setErrorMessage('Credenciais inválidas');
+            }
         }
+    };
+
+    const handleUserNameChange = (text) => {
+        setErrorMessage(null);
+        setUserName(text);
+    };
+
+    const handlePasswordChange = (text) => {
+        setErrorMessage(null);
+        setPassword(text);
     };
 
     return (
@@ -65,38 +99,60 @@ const LoginScreen = () => {
                     <View style={ViewContainerInput}>
                         <Text style={title}>E-mail</Text>
                         <TextInput
-                            style={input}
+                            style={[
+                                input,
+                                {
+                                    borderColor:
+                                        errorMessage && !userName && 'red',
+                                },
+                            ]}
                             placeholder='username'
-                            onChangeText={setUserName}
+                            onChangeText={handleUserNameChange}
                             value={userName}
                             keyboardType='email-address'
-                            placeholderTextColor='#B5BDC7'
+                            placeholderTextColor={
+                                errorMessage && !userName ? 'red' : '#B5BDC7'
+                            }
                         />
                     </View>
 
                     <View style={ViewContainerInput}>
                         <Text style={title}>Senha</Text>
                         <TextInput
-                            style={input}
+                            style={[
+                                input,
+                                {
+                                    borderColor:
+                                        errorMessage && !password && 'red',
+                                },
+                            ]}
                             placeholder='Digite pelo menos 6 caracteres'
-                            onChangeText={setPassword}
+                            onChangeText={handlePasswordChange}
                             value={password}
                             secureTextEntry
-                            placeholderTextColor='#B5BDC7'
+                            placeholderTextColor={
+                                errorMessage && !password ? 'red' : '#B5BDC7'
+                            }
                         />
-                        {errorMessage && (
-                            <Text style={{ color: 'red', fontSize: 12 }}>
-                                {errorMessage}
-                            </Text>
-                        )}
-                        <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={ButtonForgotPassWords}
+
+                        <View
+                            style={{
+                                width: '80%',
+                                height: 40,
+                                alignItems: 'center',
+                                justifyContent: 'flex-end',
+                                flexDirection: 'row',
+                            }}
                         >
-                            <Text style={TitleForgotPassWord}>
-                                Esqueceu a senha?
-                            </Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                activeOpacity={0.6}
+                                style={ButtonForgotPassWord}
+                            >
+                                <Text style={TitleForgotPassWord}>
+                                    Esqueceu a senha?
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
@@ -112,6 +168,26 @@ const LoginScreen = () => {
                     />
                     <Text style={TitleButtonEnter}>Entrar</Text>
                 </TouchableOpacity>
+                <View
+                    style={{
+                        width: '80%',
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    {errorMessage && (
+                        <Text
+                            style={{
+                                color: 'red',
+                                fontSize: 12,
+                                position: 'absolute',
+                            }}
+                        >
+                            {errorMessage}
+                        </Text>
+                    )}
+                </View>
             </View>
         </SafeAreaView>
     );

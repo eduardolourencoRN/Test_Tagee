@@ -6,10 +6,12 @@ export const styles = StyleSheet.create({
         width: widthScreen,
         height: heightScreen,
         alignItems: 'center',
+        backgroundColor: '#FFF',
     },
     containerSafeAreaView: {
         width: widthScreen,
         height: heightScreen,
+        backgroundColor: '#FFF',
         alignItems: 'center',
         paddingTop: Platform.OS === 'android' ? 50 : 50,
     },
@@ -66,14 +68,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ButtonForgotPassWord: {
-        color: '#1E9FF2',
+        width: 130,
+        height: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     TitleForgotPassWord: {
         color: '#1E9FF2',
         fontSize: 12,
         position: 'absolute',
-        left: 50,
-        top: 5,
     },
     TitleButtonEnter: {
         color: '#1E9FF2',

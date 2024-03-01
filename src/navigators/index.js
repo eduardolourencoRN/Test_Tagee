@@ -9,9 +9,9 @@ const Stack = createNativeStackNavigator();
 function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName='Schedulings'>
                 <Stack.Screen name='Home' component={LoginScreen} />
-                <Stack.Screen name='Home' component={Schedulings} />
+                <Stack.Screen name='Schedulings' component={Schedulings} />
             </Stack.Navigator>
         </NavigationContainer>
     );
