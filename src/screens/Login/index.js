@@ -16,6 +16,7 @@ import authenticate from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../contexts/AuthContext';
+import CustomInput from '../../components/CustomInput';
 
 const LoginScreen = () => {
     const [userName, setUserName] = useState('');
@@ -99,65 +100,35 @@ const LoginScreen = () => {
                     />
                 </View>
                 <View style={styles.ViewInputs}>
-                    <View style={styles.ViewContainerInput}>
-                        <Text style={styles.title}>Nome de usuário</Text>
-                        <TextInput
-                            style={[
-                                styles.input,
-                                {
-                                    borderColor:
-                                        errorMessage && !userName && 'red',
-                                },
-                            ]}
-                            placeholder='Usuário'
-                            onChangeText={handleUserNameChange}
-                            value={userName}
-                            keyboardType='email-address'
-                            autoCapitalize='none'
-                            placeholderTextColor={
-                                errorMessage && !userName ? 'red' : '#B5BDC7'
-                            }
-                        />
-                    </View>
+                    <CustomInput
+                        label='Nome de usuário'
+                        value={userName}
+                        onChangeText={handleUserNameChange}
+                        placeholder='Usuário'
+                        keyboardType='email-address'
+                        autoCapitalize='none'
+                        errorMessage={
+                            errorMessage && !userName
+                                ? 'Digite um nome de usuário válido'
+                                : null
+                        }
+                    />
 
-                    <View style={styles.ViewContainerInput}>
-                        <Text style={styles.title}>Senha</Text>
-                        <TextInput
-                            style={[
-                                styles.input,
-                                {
-                                    borderColor:
-                                        errorMessage && !password && 'red',
-                                },
-                            ]}
-                            placeholder='Digite pelo menos 6 caracteres'
-                            onChangeText={handlePasswordChange}
-                            value={password}
-                            secureTextEntry
-                            autoCapitalize='none'
-                            placeholderTextColor={
-                                errorMessage && !password ? 'red' : '#B5BDC7'
-                            }
-                        />
-                        <View
-                            style={{
-                                width: '80%',
-                                height: 20,
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                flexDirection: 'row',
-                            }}
-                        >
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.ButtonForgotPassWord}
-                            >
-                                <Text style={styles.TitleForgotPassWord}>
-                                    Esqueceu a senha?
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    <CustomInput
+                        label='Senha'
+                        value={password}
+                        onChangeText={handlePasswordChange}
+                        placeholder='Digite pelo menos 6 caracteres'
+                        secureTextEntry
+                        autoCapitalize='none'
+                        errorMessage={
+                            errorMessage && !password
+                                ? 'A senha deve ter pelo menos 6 caracteres'
+                                : null
+                        }
+                        showForgotPasswordButton={true}
+                        onPressForgotPassword={() => {}}
+                    />
                 </View>
 
                 <TouchableOpacity
@@ -172,19 +143,7 @@ const LoginScreen = () => {
                     />
                     <Text style={styles.TitleButtonEnter}>Entrar</Text>
                 </TouchableOpacity>
-                <View style={styles.errorMessageStyleView}>
-                    {errorMessage && (
-                        <Text
-                            style={{
-                                color: 'red',
-                                fontSize: 12,
-                                position: 'absolute',
-                            }}
-                        >
-                            {errorMessage}
-                        </Text>
-                    )}
-                </View>
+
                 {isLoading && (
                     <View
                         style={{
