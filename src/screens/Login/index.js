@@ -100,7 +100,7 @@ const LoginScreen = () => {
                 </View>
                 <View style={styles.ViewInputs}>
                     <View style={styles.ViewContainerInput}>
-                        <Text style={styles.title}>E-mail</Text>
+                        <Text style={styles.title}>Nome de usuário</Text>
                         <TextInput
                             style={[
                                 styles.input,
@@ -109,7 +109,7 @@ const LoginScreen = () => {
                                         errorMessage && !userName && 'red',
                                 },
                             ]}
-                            placeholder='username'
+                            placeholder='Usuário'
                             onChangeText={handleUserNameChange}
                             value={userName}
                             keyboardType='email-address'
