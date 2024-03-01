@@ -89,4 +89,28 @@ export const styles = StyleSheet.create({
         left: 20,
         justifyContent: 'center',
     },
+
+    errorMessageStyleView: {
+        width: '80%',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    forgoutPasswordStyle: {
+        width: '80%',
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+    },
+    loadingStyle: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
 });

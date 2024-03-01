@@ -8,12 +8,14 @@ export const AuthProvider = ({ children }) => {
 
     const login = () => {
         setIsAuthenticated(true);
+        console.log(isAuthenticated);
     };
 
     const logout = async () => {
         try {
             await AsyncStorage.removeItem('userToken');
             setIsAuthenticated(false);
+            console.log('removendo token logout');
         } catch (error) {
             console.error('Erro ao fazer logout:', error);
         }

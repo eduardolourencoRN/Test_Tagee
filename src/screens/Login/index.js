@@ -15,6 +15,7 @@ import Constants from 'expo-constants';
 import authenticate from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LoginScreen = () => {
     const [userName, setUserName] = useState('');
@@ -39,13 +40,13 @@ const LoginScreen = () => {
     } = styles;
 
     const { reset } = useNavigation();
+    const { isAuthenticated } = useAuth();
 
     const handleLogin = async () => {
         try {
             setIsLoading(true);
             const token = await authenticate(userName, password, device);
             await AsyncStorage.setItem('userToken', token.token);
-            console.log('Token salvo no AsyncStorage:', token.token);
             setErrorMessage(null);
             reset({
                 index: 0,
@@ -85,6 +86,15 @@ const LoginScreen = () => {
         setErrorMessage(null);
         setPassword(text);
     };
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            reset({
+                index: 0,
+                routes: [{ name: 'Schedulings' }],
+            });
+        }
+    }, [isAuthenticated, reset]);
 
     return (
         <SafeAreaView style={containerSafeAreaView}>
@@ -144,7 +154,6 @@ const LoginScreen = () => {
                                 errorMessage && !password ? 'red' : '#B5BDC7'
                             }
                         />
-
                         <View
                             style={{
                                 width: '80%',
@@ -178,14 +187,7 @@ const LoginScreen = () => {
                     />
                     <Text style={TitleButtonEnter}>Entrar</Text>
                 </TouchableOpacity>
-                <View
-                    style={{
-                        width: '80%',
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
+                <View style={styles.errorMessageStyleView}>
                     {errorMessage && (
                         <Text
                             style={{
