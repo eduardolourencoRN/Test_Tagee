@@ -23,21 +23,6 @@ const LoginScreen = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const device = Constants.deviceName;
     const [isLoading, setIsLoading] = useState(false);
-    const {
-        containerSafeAreaView,
-        container,
-        ButtonBack,
-        ViewImage,
-        image,
-        ViewInputs,
-        ViewContainerInput,
-        input,
-        title,
-        ButtonForgotPassWord,
-        Button,
-        TitleButtonEnter,
-        TitleForgotPassWord,
-    } = styles;
 
     const { reset } = useNavigation();
     const { isAuthenticated } = useAuth();
@@ -97,28 +82,28 @@ const LoginScreen = () => {
     }, [isAuthenticated, reset]);
 
     return (
-        <SafeAreaView style={containerSafeAreaView}>
-            <View style={container}>
-                <TouchableOpacity style={ButtonBack} activeOpacity={0.6}>
+        <SafeAreaView style={styles.containerSafeAreaView}>
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.ButtonBack} activeOpacity={0.6}>
                     <Icon
                         name='chevron-back-outline'
                         size={25}
                         color={'#1E9FF2'}
                     />
                 </TouchableOpacity>
-                <View style={ViewImage}>
+                <View style={styles.ViewImage}>
                     <Image
                         source={require('../../Images/logotipo.png')}
                         resizeMode='contain'
-                        style={image}
+                        style={styles.image}
                     />
                 </View>
-                <View style={ViewInputs}>
-                    <View style={ViewContainerInput}>
-                        <Text style={title}>E-mail</Text>
+                <View style={styles.ViewInputs}>
+                    <View style={styles.ViewContainerInput}>
+                        <Text style={styles.title}>E-mail</Text>
                         <TextInput
                             style={[
-                                input,
+                                styles.input,
                                 {
                                     borderColor:
                                         errorMessage && !userName && 'red',
@@ -135,11 +120,11 @@ const LoginScreen = () => {
                         />
                     </View>
 
-                    <View style={ViewContainerInput}>
-                        <Text style={title}>Senha</Text>
+                    <View style={styles.ViewContainerInput}>
+                        <Text style={styles.title}>Senha</Text>
                         <TextInput
                             style={[
-                                input,
+                                styles.input,
                                 {
                                     borderColor:
                                         errorMessage && !password && 'red',
@@ -165,9 +150,9 @@ const LoginScreen = () => {
                         >
                             <TouchableOpacity
                                 activeOpacity={0.6}
-                                style={ButtonForgotPassWord}
+                                style={styles.ButtonForgotPassWord}
                             >
-                                <Text style={TitleForgotPassWord}>
+                                <Text style={styles.TitleForgotPassWord}>
                                     Esqueceu a senha?
                                 </Text>
                             </TouchableOpacity>
@@ -176,7 +161,7 @@ const LoginScreen = () => {
                 </View>
 
                 <TouchableOpacity
-                    style={Button}
+                    style={styles.Button}
                     activeOpacity={0.6}
                     onPress={handleLogin}
                 >
@@ -185,7 +170,7 @@ const LoginScreen = () => {
                         size={15}
                         color={'#1E9FF2'}
                     />
-                    <Text style={TitleButtonEnter}>Entrar</Text>
+                    <Text style={styles.TitleButtonEnter}>Entrar</Text>
                 </TouchableOpacity>
                 <View style={styles.errorMessageStyleView}>
                     {errorMessage && (
