@@ -6,7 +6,6 @@ import {
     Image,
     SafeAreaView,
     Keyboard,
-    ActivityIndicator,
 } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,10 +21,8 @@ const LoginScreen = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
-    const [credencias, setCredencias] = useState(null);
     const device = Constants.deviceName;
     const [isLoading, setIsLoading] = useState(false);
-
     const { reset } = useNavigation();
     const { isAuthenticated } = useAuth();
 
@@ -61,7 +58,6 @@ const LoginScreen = () => {
                 }
             } else {
                 console.error('Erro ao fazer login:', error);
-                setCredencias('Credenciais inválidas');
                 setErrorMessage('Credenciais inválidas');
             }
         } finally {

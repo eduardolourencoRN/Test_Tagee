@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    ActivityIndicator,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import CustomLoading from '../../components/CustomLoading';
 
-const Schedulings = ({ text }) => {
+const Schedulings = () => {
     const { reset } = useNavigation();
     const { isAuthenticated, logout } = useAuth();
     const [isLoading, setIsLoading] = useState(false);

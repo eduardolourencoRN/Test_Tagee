@@ -37,15 +37,7 @@ const CustomInput = ({
             {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
 
             {showForgotPasswordButton && (
-                <View
-                    style={{
-                        width: '80%',
-                        height: 20,
-                        alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        flexDirection: 'row',
-                    }}
-                >
+                <View style={styles.containerforgotPassword}>
                     <TouchableOpacity
                         style={styles.forgotPasswordButton}
                         onPress={onPressForgotPassword}
@@ -98,6 +90,13 @@ const styles = StyleSheet.create({
     forgotPasswordText: {
         fontSize: 12,
         color: '#1E9FF2',
+    },
+    containerforgotPassword: {
+        width: '80%',
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
     },
 });
 
