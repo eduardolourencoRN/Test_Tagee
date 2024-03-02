@@ -29,11 +29,10 @@ const CustomInput = ({
                 placeholder={placeholder}
                 onChangeText={onChangeText}
                 value={value}
+                secureTextEntry
                 keyboardType={keyboardType}
                 autoCapitalize={autoCapitalize}
-                placeholderTextColor={
-                    errorMessage && !value ? 'red' : '#B5BDC7'
-                }
+                placeholderTextColor='#B5BDC7'
             />
             {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
 
@@ -57,7 +56,6 @@ const CustomInput = ({
                     </TouchableOpacity>
                 </View>
             )}
-            {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
         </View>
     );
 };

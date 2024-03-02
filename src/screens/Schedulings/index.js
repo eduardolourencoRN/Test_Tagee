@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import CustomLoading from '../../components/CustomLoading';
 
 const Schedulings = ({ text }) => {
     const { reset } = useNavigation();
@@ -46,12 +47,7 @@ const Schedulings = ({ text }) => {
                     <Text style={styles.text}>Logout</Text>
                 </TouchableOpacity>
             )}
-            {isLoading && (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color='#1E9FF2' />
-                    <Text style={styles.loadingText}>Saindo...</Text>
-                </View>
-            )}
+            <CustomLoading isLoading={isLoading} />
         </View>
     );
 };

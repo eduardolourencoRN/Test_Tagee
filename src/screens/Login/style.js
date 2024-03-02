@@ -113,4 +113,9 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
+    error: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 10,
+    },
 });

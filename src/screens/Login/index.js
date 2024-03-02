@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
-    TextInput,
     TouchableOpacity,
     Image,
     SafeAreaView,
@@ -17,11 +16,13 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../contexts/AuthContext';
 import CustomInput from '../../components/CustomInput';
+import CustomLoading from '../../components/CustomLoading';
 
 const LoginScreen = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
+    const [credencias, setCredencias] = useState(null);
     const device = Constants.deviceName;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -29,10 +30,12 @@ const LoginScreen = () => {
     const { isAuthenticated } = useAuth();
 
     const handleLogin = async () => {
+        Keyboard.dismiss();
         try {
             setIsLoading(true);
             const token = await authenticate(userName, password, device);
             await AsyncStorage.setItem('userToken', token.token);
+
             setErrorMessage(null);
             reset({
                 index: 0,
@@ -42,12 +45,14 @@ const LoginScreen = () => {
             setIsLoading(false);
             if (error.response) {
                 const responseData = error.response.data;
+
                 console.error('Erro ao fazer login:', responseData);
                 if (
                     responseData &&
                     responseData.errors &&
                     responseData.errors.username
                 ) {
+                    console.log(responseData.errors);
                     setErrorMessage(responseData.errors.username[0]);
                 } else if (responseData && responseData.message) {
                     setErrorMessage(responseData.message);
@@ -56,6 +61,7 @@ const LoginScreen = () => {
                 }
             } else {
                 console.error('Erro ao fazer login:', error);
+                setCredencias('Credenciais inválidas');
                 setErrorMessage('Credenciais inválidas');
             }
         } finally {
@@ -108,7 +114,7 @@ const LoginScreen = () => {
                         keyboardType='email-address'
                         autoCapitalize='none'
                         errorMessage={
-                            errorMessage && !userName
+                            !userName && errorMessage
                                 ? 'Digite um nome de usuário válido'
                                 : null
                         }
@@ -122,7 +128,7 @@ const LoginScreen = () => {
                         secureTextEntry
                         autoCapitalize='none'
                         errorMessage={
-                            errorMessage && !password
+                            !password && errorMessage
                                 ? 'A senha deve ter pelo menos 6 caracteres'
                                 : null
                         }
@@ -144,30 +150,11 @@ const LoginScreen = () => {
                     <Text style={styles.TitleButtonEnter}>Entrar</Text>
                 </TouchableOpacity>
 
-                {isLoading && (
-                    <View
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }}
-                    >
-                        <ActivityIndicator size='large' color='#1E9FF2' />
-                        <Text
-                            style={{
-                                marginTop: 10,
-                                color: '#fff',
-                                fontSize: 19,
-                            }}
-                        >
-                            Entrando...
-                        </Text>
-                    </View>
+                <CustomLoading isLoading={isLoading} />
+
+                {errorMessage ===
+                    'As credenciais fornecidas estão incorretas.' && (
+                    <Text style={styles.error}>{errorMessage}</Text>
                 )}
             </View>
         </SafeAreaView>
