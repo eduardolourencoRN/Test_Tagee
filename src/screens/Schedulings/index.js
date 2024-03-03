@@ -52,9 +52,6 @@ const MyCarousel = () => {
     };
 
     const loadNextDays = () => {
-        setSelectedDate();
-        console.log(selectedDate);
-
         setStartIndex(startIndex + 5);
     };
 
@@ -168,7 +165,7 @@ const MyCarousel = () => {
                     </View>
                 )}
             </View>
-            <View style={{ height: 50 }} />
+            <View style={{ height: 170 }} />
         </ScrollView>
     );
 };
