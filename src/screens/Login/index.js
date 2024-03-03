@@ -7,22 +7,22 @@ import {
     SafeAreaView,
     Keyboard,
 } from 'react-native';
-import { styles } from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Constants from 'expo-constants';
-import authenticate from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../contexts/AuthContext';
+import Constants from 'expo-constants';
+import authenticate from '../../services/auth';
+import Icon from 'react-native-vector-icons/Ionicons';
 import CustomInput from '../../components/CustomInput';
 import CustomLoading from '../../components/CustomLoading';
+import { styles } from './style';
 
 const LoginScreen = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
-    const device = Constants.deviceName;
     const [isLoading, setIsLoading] = useState(false);
+    const device = Constants.deviceName;
     const { reset } = useNavigation();
     const { isAuthenticated } = useAuth();
 
@@ -82,7 +82,7 @@ const LoginScreen = () => {
                 routes: [{ name: 'Schedulings' }],
             });
         }
-    }, [isAuthenticated, reset]);
+    }, [isAuthenticated]);
 
     return (
         <SafeAreaView style={styles.containerSafeAreaView}>

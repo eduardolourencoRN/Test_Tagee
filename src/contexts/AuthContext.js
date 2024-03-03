@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
 
     const login = () => {
         setIsAuthenticated(true);
-        console.log(isAuthenticated);
     };
 
     const logout = async () => {
