@@ -5,23 +5,20 @@ import {
     FlatList,
     TouchableOpacity,
     ScrollView,
-    Dimensions,
 } from 'react-native';
 import appointmentsData from '../../services/appointmentsData';
 import AppointmentCarousel from '../../components/AppointmentCarousel';
-import { styles } from './style';
+import CustomHeader from '../../components/CustomHeader';
+import CustomAppointment from '../../components/CustomAppointmentItem';
 import { AntDesign } from '@expo/vector-icons';
 import monthNamesUtils from '../../Utils/monthNames';
 import weekDays from '../../Utils/weekdays';
-import CustomHeader from '../../components/CustomHeader';
-import CustomAppointment from '../../components/CustomAppointmentItem';
+import { styles } from './style';
 
 const MyCarousel = () => {
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [startIndex, setStartIndex] = useState(0);
-    const { widthX } = Dimensions.get('screen').width;
-    const { heightY } = Dimensions.get('screen').height;
 
     const getNextDays = async (startIndex, count) => {
         const days = [];
@@ -76,6 +73,7 @@ const MyCarousel = () => {
                 time={appointment.time}
                 service={appointment.service}
                 clientName={appointment.clientName}
+                professionalName={appointment.professionalName}
             />
         ));
     };
@@ -105,68 +103,68 @@ const MyCarousel = () => {
     );
 
     return (
-        <ScrollView style={{ width: widthX, height: heightY }}>
-            <View style={styles.container}>
-                <CustomHeader title={'Agendamentos'} />
-                <View
-                    style={{
-                        width: '100%',
-                        height: 50,
-                        justifyContent: 'center',
-                        marginHorizontal: 10,
-                    }}
-                >
-                    <Text style={{ fontSize: 14, color: '#808080' }}>Hoje</Text>
-                    <Text style={styles.date}>{currentDateFormatted}</Text>
-                </View>
-
-                <View style={styles.containerFlatList}>
-                    <View style={{ width: 40, alignItems: 'center' }}>
-                        <TouchableOpacity
-                            onPress={loadPreviousDays}
-                            style={{ width: 30, height: 30 }}
-                        >
-                            <AntDesign name='left' size={24} color='black' />
-                        </TouchableOpacity>
-                    </View>
-
-                    <FlatList
-                        data={dates}
-                        renderItem={({ item }) => (
-                            <AppointmentCarousel
-                                item={item}
-                                selectedDate={selectedDate}
-                                handleDayPress={handleDayPress}
-                                appointmentsData={appointmentsData}
-                                selectedColor={{ backgroundColor: '#00BFFF' }}
-                                unselectedColor={{ backgroundColor: '#87CEFA' }}
-                            />
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                        horizontal={true}
-                        contentContainerStyle={styles.flatlistContainer}
-                        ListEmptyComponent={<Text>No items</Text>}
-                        initialNumToRender={5}
-                        showsHorizontalScrollIndicator={false}
-                    />
-                    <View style={{ width: 40, alignItems: 'center' }}>
-                        <TouchableOpacity
-                            onPress={loadNextDays}
-                            style={{ width: 30, height: 30 }}
-                        >
-                            <AntDesign name='right' size={24} color='black' />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {selectedDate && (
-                    <View style={styles.appointmentsContainer}>
-                        {renderAppointments()}
-                    </View>
-                )}
+        <View style={styles.container}>
+            <CustomHeader title={'Agendamentos'} />
+            <View
+                style={{
+                    width: '100%',
+                    height: 50,
+                    justifyContent: 'center',
+                    marginHorizontal: 10,
+                }}
+            >
+                <Text style={{ fontSize: 14, color: '#808080' }}>Hoje</Text>
+                <Text style={styles.date}>{currentDateFormatted}</Text>
             </View>
-            <View style={{ height: 170 }} />
-        </ScrollView>
+            <View style={styles.containerFlatList}>
+                <View style={{ width: 40, alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={loadPreviousDays}
+                        style={{ width: 30, height: 30 }}
+                    >
+                        <AntDesign name='left' size={24} color='black' />
+                    </TouchableOpacity>
+                </View>
+
+                <FlatList
+                    data={dates}
+                    renderItem={({ item }) => (
+                        <AppointmentCarousel
+                            item={item}
+                            selectedDate={selectedDate}
+                            handleDayPress={handleDayPress}
+                            appointmentsData={appointmentsData}
+                            selectedColor={{ backgroundColor: '#00BFFF' }}
+                            unselectedColor={{ backgroundColor: '#87CEFA' }}
+                        />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    horizontal
+                    contentContainerStyle={styles.flatlistContainer}
+                    ListEmptyComponent={<Text>No items</Text>}
+                    initialNumToRender={5}
+                    showsHorizontalScrollIndicator={false}
+                />
+
+                <View style={{ width: 40, alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={loadNextDays}
+                        style={{ width: 30, height: 30 }}
+                    >
+                        <AntDesign name='right' size={24} color='black' />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            {selectedDate && (
+                <ScrollView
+                    style={styles.appointmentsContainer}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {renderAppointments()}
+                </ScrollView>
+            )}
+            <View style={{ height: 100 }} />
+        </View>
     );
 };
 

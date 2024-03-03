@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
     },
     appointmentsContainer: {
         marginTop: 10,
-        alignItems: 'center',
     },
     appointmentItem: {
         width: width / 1.4,
