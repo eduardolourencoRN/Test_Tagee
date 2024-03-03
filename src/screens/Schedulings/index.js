@@ -20,7 +20,8 @@ const MyCarousel = () => {
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [startIndex, setStartIndex] = useState(0);
-    const { width: widthX, height: heightY } = Dimensions.get('screen');
+    const { widthX } = Dimensions.get('screen').width;
+    const { heightY } = Dimensions.get('screen').height;
 
     const getNextDays = async (startIndex, count) => {
         const days = [];
@@ -51,6 +52,9 @@ const MyCarousel = () => {
     };
 
     const loadNextDays = () => {
+        setSelectedDate();
+        console.log(selectedDate);
+
         setStartIndex(startIndex + 5);
     };
 
@@ -63,7 +67,7 @@ const MyCarousel = () => {
     const handleDayPress = (fullDate) => {
         setSelectedDate(fullDate);
     };
-    const [selectedItem, setSelectedItem] = useState(null);
+
     const renderAppointments = () => {
         if (!selectedDate) return null;
         const appointments = appointmentsData.filter(
@@ -75,9 +79,6 @@ const MyCarousel = () => {
                 time={appointment.time}
                 service={appointment.service}
                 clientName={appointment.clientName}
-                index={index[0]}
-                isSelected={index === selectedItem}
-                lastIndex={appointments.length - 1} // Passa o índice do último item na lista
             />
         ));
     };

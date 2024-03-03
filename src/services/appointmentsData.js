@@ -53,5 +53,47 @@ const appointmentsData = [
         service: 'Barba',
         clientName: 'Lucas',
     },
+    {
+        date: '07/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '07/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '10/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '14/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '22/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '22/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
+    {
+        date: '17/03/2024',
+        time: '13:30 pm',
+        service: 'Barba',
+        clientName: 'Lucas',
+    },
 ];
 export default appointmentsData;

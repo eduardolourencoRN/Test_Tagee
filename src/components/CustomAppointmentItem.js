@@ -1,10 +1,21 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, Animated } from 'react-native';
 import { styles } from '../screens/Schedulings/style';
 
-const CustomAppointment = ({ time, service, index, clientName }) => {
+const CustomAppointment = ({ time, service, clientName }) => {
+    const fadeInDown = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(fadeInDown, {
+            toValue: 1,
+            duration: 500,
+            delay: 0,
+            useNativeDriver: true,
+        }).start();
+    }, []);
+
     return (
-        <View
+        <Animated.View
             style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -12,6 +23,15 @@ const CustomAppointment = ({ time, service, index, clientName }) => {
                 width: '100%',
                 height: 100,
                 marginTop: 10,
+                opacity: fadeInDown,
+                transform: [
+                    {
+                        translateY: fadeInDown.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [-50, 0],
+                        }),
+                    },
+                ],
             }}
         >
             <View
@@ -30,7 +50,7 @@ const CustomAppointment = ({ time, service, index, clientName }) => {
                     }}
                 />
             </View>
-            <View key={index} style={styles.appointmentItem}>
+            <View style={styles.appointmentItem}>
                 <View
                     style={{
                         width: 5,
@@ -51,8 +71,8 @@ const CustomAppointment = ({ time, service, index, clientName }) => {
                     </Text>
                 </View>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 
-export default CustomAppointment;
+export default React.memo(CustomAppointment);

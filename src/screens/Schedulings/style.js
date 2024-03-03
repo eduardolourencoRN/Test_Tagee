@@ -58,5 +58,6 @@ export const styles = StyleSheet.create({
     },
     date: {
         fontSize: 18,
+        fontWeight: '600',
     },
 });
