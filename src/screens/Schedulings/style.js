@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     },
     flatlistContainer: {
         alignItems: 'center',
+        justifyContent: 'center',
     },
     item: {
         backgroundColor: 'lightblue',
@@ -39,13 +40,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     appointmentItem: {
-        width: 100,
+        width: width / 1.4,
         height: 100,
-        marginBottom: 5,
-        backgroundColor: 'lightgray',
-        padding: 10,
+        backgroundColor: '#ADD8E6',
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
     },
-    containerFlatList: { flexDirection: 'row', alignItems: 'center' },
+    containerFlatList: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
     date: {
         fontSize: 18,
     },

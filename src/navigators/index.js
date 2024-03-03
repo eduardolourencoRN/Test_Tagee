@@ -8,43 +8,42 @@ import DateDetailScreen from '../screens/DateDetail';
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+const App = () => {
     const { isAuthenticated } = useAuth();
-
-    if (!isAuthenticated) {
-        return null;
-    }
+    console.log(isAuthenticated);
 
     return (
         <NavigationContainer>
-            <Stack.Navigator
-                initialRouteName={
-                    isAuthenticated ? 'Schedulings' : 'LoginScreen'
-                }
-            >
-                {console.log(isAuthenticated)}
-                <Stack.Screen
-                    name='LoginScreen'
-                    component={LoginScreen}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name='Schedulings'
-                    component={Schedulings}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name='DateDetailScreen'
-                    component={DateDetailScreen}
-                    options={{ headerShown: false }}
-                />
+            <Stack.Navigator>
+                {isAuthenticated ? (
+                    <>
+                        <Stack.Screen
+                            name='Schedulings'
+                            component={Schedulings}
+                            options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                            name='DateDetailScreen'
+                            component={DateDetailScreen}
+                            options={{ headerShown: false }}
+                        />
+                    </>
+                ) : (
+                    <Stack.Screen
+                        name='LoginScreen'
+                        component={LoginScreen}
+                        options={{ headerShown: false }}
+                    />
+                )}
             </Stack.Navigator>
         </NavigationContainer>
     );
-}
+};
 
-export default () => (
+const AppWrapper = () => (
     <AuthProvider>
         <App />
     </AuthProvider>
 );
+
+export default AppWrapper;

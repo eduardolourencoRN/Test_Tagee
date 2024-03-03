@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    ScrollView,
+    Dimensions,
+} from 'react-native';
 import appointmentsData from '../../services/appointmentsData';
 import AppointmentCarousel from '../../components/AppointmentCarousel';
 import { styles } from './style';
@@ -7,11 +14,13 @@ import { AntDesign } from '@expo/vector-icons';
 import monthNamesUtils from '../../Utils/monthNames';
 import weekDays from '../../Utils/weekdays';
 import CustomHeader from '../../components/CustomHeader';
+import CustomAppointment from '../../components/CustomAppointmentItem';
 
 const MyCarousel = () => {
     const [dates, setDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [startIndex, setStartIndex] = useState(0);
+    const { width: widthX, height: heightY } = Dimensions.get('screen');
 
     const getNextDays = async (startIndex, count) => {
         const days = [];
@@ -54,17 +63,22 @@ const MyCarousel = () => {
     const handleDayPress = (fullDate) => {
         setSelectedDate(fullDate);
     };
-
+    const [selectedItem, setSelectedItem] = useState(null);
     const renderAppointments = () => {
         if (!selectedDate) return null;
         const appointments = appointmentsData.filter(
             (appointment) => appointment.date === selectedDate,
         );
         return appointments.map((appointment, index) => (
-            <View key={index} style={styles.appointmentItem}>
-                <Text>{appointment.time}</Text>
-                <Text>{appointment.service}</Text>
-            </View>
+            <CustomAppointment
+                key={index}
+                time={appointment.time}
+                service={appointment.service}
+                clientName={appointment.clientName}
+                index={index[0]}
+                isSelected={index === selectedItem}
+                lastIndex={appointments.length - 1} // Passa o índice do último item na lista
+            />
         ));
     };
 
@@ -93,55 +107,68 @@ const MyCarousel = () => {
     );
 
     return (
-        <View style={styles.container}>
-            <CustomHeader title={'Agendamentos'} />
-            <View
-                style={{
-                    width: '100%',
-                    height: 50,
-                    justifyContent: 'center',
-                    marginHorizontal: 10,
-                }}
-            >
-                <Text style={{ fontSize: 14, color: '#808080' }}>Hoje</Text>
-                <Text style={styles.date}>{currentDateFormatted}</Text>
-            </View>
+        <ScrollView style={{ width: widthX, height: heightY }}>
+            <View style={styles.container}>
+                <CustomHeader title={'Agendamentos'} />
+                <View
+                    style={{
+                        width: '100%',
+                        height: 50,
+                        justifyContent: 'center',
+                        marginHorizontal: 10,
+                    }}
+                >
+                    <Text style={{ fontSize: 14, color: '#808080' }}>Hoje</Text>
+                    <Text style={styles.date}>{currentDateFormatted}</Text>
+                </View>
 
-            <View style={styles.containerFlatList}>
-                <TouchableOpacity onPress={loadPreviousDays}>
-                    <AntDesign name='left' size={24} color='black' />
-                </TouchableOpacity>
+                <View style={styles.containerFlatList}>
+                    <View style={{ width: 40, alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={loadPreviousDays}
+                            style={{ width: 30, height: 30 }}
+                        >
+                            <AntDesign name='left' size={24} color='black' />
+                        </TouchableOpacity>
+                    </View>
 
-                <FlatList
-                    data={dates}
-                    renderItem={({ item }) => (
-                        <AppointmentCarousel
-                            item={item}
-                            selectedDate={selectedDate}
-                            handleDayPress={handleDayPress}
-                            appointmentsData={appointmentsData}
-                        />
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                    horizontal={true}
-                    contentContainerStyle={styles.flatlistContainer}
-                    ListEmptyComponent={<Text>No items</Text>}
-                    initialNumToRender={5}
-                    showsHorizontalScrollIndicator={false}
-                />
-                <TouchableOpacity onPress={loadNextDays}>
-                    <AntDesign name='right' size={24} color='black' />
-                </TouchableOpacity>
-            </View>
+                    <FlatList
+                        data={dates}
+                        renderItem={({ item }) => (
+                            <AppointmentCarousel
+                                item={item}
+                                selectedDate={selectedDate}
+                                handleDayPress={handleDayPress}
+                                appointmentsData={appointmentsData}
+                                selectedColor={{ backgroundColor: '#00BFFF' }}
+                                unselectedColor={{ backgroundColor: '#87CEFA' }}
+                            />
+                        )}
+                        keyExtractor={(item, index) => index.toString()}
+                        horizontal={true}
+                        contentContainerStyle={styles.flatlistContainer}
+                        ListEmptyComponent={<Text>No items</Text>}
+                        initialNumToRender={5}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                    <View style={{ width: 40, alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={loadNextDays}
+                            style={{ width: 30, height: 30 }}
+                        >
+                            <AntDesign name='right' size={24} color='black' />
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
-            <View>
                 {selectedDate && (
                     <View style={styles.appointmentsContainer}>
                         {renderAppointments()}
                     </View>
                 )}
             </View>
-        </View>
+            <View style={{ height: 50 }} />
+        </ScrollView>
     );
 };
 
