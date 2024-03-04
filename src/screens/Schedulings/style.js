@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
     container: {
         width: width,
         height: height,
-        paddingTop: Platform.OS === 'android' ? 50 : 50,
     },
     flatlistContainer: {
         alignItems: 'center',

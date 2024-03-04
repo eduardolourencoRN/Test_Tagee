@@ -14,6 +14,7 @@ import { AntDesign } from '@expo/vector-icons';
 import monthNamesUtils from '../../Utils/monthNames';
 import weekDays from '../../Utils/weekdays';
 import { styles } from './style';
+import { Ionicons } from '@expo/vector-icons';
 
 const MyCarousel = () => {
     const [dates, setDates] = useState([]);
@@ -26,7 +27,9 @@ const MyCarousel = () => {
         const today = new Date();
         let nextDate = new Date(today);
         nextDate.setDate(today.getDate() + startIndex);
-
+        {
+            console.log(today.getDate());
+        }
         for (let i = 0; i < count; i++) {
             const monthNames = monthNamesUtils;
             const formattedDate = {
@@ -67,6 +70,16 @@ const MyCarousel = () => {
         const appointments = appointmentsData.filter(
             (appointment) => appointment.date === selectedDate,
         );
+        if (appointments.length === 0) {
+            return (
+                <View style={{ alignItems: 'center', marginTop: 20 }}>
+                    <Text style={{ fontSize: 16, color: 'red' }}>
+                        Não há agendamentos para esta data.
+                    </Text>
+                </View>
+            );
+        }
+
         return appointments.map((appointment, index) => (
             <CustomAppointment
                 key={index}
@@ -104,18 +117,30 @@ const MyCarousel = () => {
 
     return (
         <View style={styles.container}>
-            <CustomHeader title={'Agendamentos'} />
+            <CustomHeader title={'AGENDAMENTOS'} />
+            <Text style={{ fontSize: 14, color: '#808080', marginLeft: 10 }}>
+                Hoje
+            </Text>
             <View
                 style={{
-                    width: '100%',
-                    height: 50,
-                    justifyContent: 'center',
+                    width: '90%',
+                    height: 30,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     marginHorizontal: 10,
                 }}
             >
-                <Text style={{ fontSize: 14, color: '#808080' }}>Hoje</Text>
                 <Text style={styles.date}>{currentDateFormatted}</Text>
+                <TouchableOpacity>
+                    <Ionicons
+                        name='notifications-outline'
+                        size={25}
+                        color='black'
+                    />
+                </TouchableOpacity>
             </View>
+
             <View style={styles.containerFlatList}>
                 <View style={{ width: 40, alignItems: 'center' }}>
                     <TouchableOpacity
@@ -149,7 +174,7 @@ const MyCarousel = () => {
                 <View style={{ width: 40, alignItems: 'center' }}>
                     <TouchableOpacity
                         onPress={loadNextDays}
-                        style={{ width: 30, height: 30 }}
+                        style={{ width: 30, height: 20 }}
                     >
                         <AntDesign name='right' size={24} color='black' />
                     </TouchableOpacity>
@@ -163,7 +188,7 @@ const MyCarousel = () => {
                     {renderAppointments()}
                 </ScrollView>
             )}
-            <View style={{ height: 100 }} />
+            <View style={{ height: 120 }} />
         </View>
     );
 };

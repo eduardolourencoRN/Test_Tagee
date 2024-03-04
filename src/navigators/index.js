@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import LoginScreen from '../screens/Login';
 import Schedulings from '../screens/Schedulings';
 import DateDetailScreen from '../screens/DateDetail';
+import { StatusBar } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ const App = () => {
 
     return (
         <NavigationContainer>
+            <StatusBar backgroundColor={'#1E9FF2'} />
             <Stack.Navigator>
                 {isAuthenticated ? (
                     <>
