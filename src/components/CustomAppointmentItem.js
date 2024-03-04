@@ -1,13 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-    View,
-    Text,
-    Animated,
-    Modal,
-    TouchableOpacity,
-    StyleSheet,
-} from 'react-native';
-import calculateHeight from '../services/heightCalculator';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import calculateHeight from '../Utils/heightCalculator';
 import { Dimensions } from 'react-native';
 import CustomModal from './CustomModal';
 

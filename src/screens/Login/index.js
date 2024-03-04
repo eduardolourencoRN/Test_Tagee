@@ -85,75 +85,61 @@ const LoginScreen = () => {
     }, [isAuthenticated]);
 
     return (
-        <SafeAreaView style={styles.containerSafeAreaView}>
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.ButtonBack} activeOpacity={0.6}>
-                    <Icon
-                        name='chevron-back-outline'
-                        size={25}
-                        color={'#1E9FF2'}
-                    />
-                </TouchableOpacity>
-                <View style={styles.ViewImage}>
-                    <Image
-                        source={require('../../Images/logotipo.png')}
-                        resizeMode='contain'
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.ViewInputs}>
-                    <CustomInput
-                        label='Nome de usuário'
-                        value={userName}
-                        onChangeText={handleUserNameChange}
-                        placeholder='Usuário'
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                        errorMessage={
-                            !userName && errorMessage
-                                ? 'Digite um nome de usuário válido'
-                                : null
-                        }
-                    />
-
-                    <CustomInput
-                        label='Senha'
-                        value={password}
-                        onChangeText={handlePasswordChange}
-                        placeholder='Digite pelo menos 6 caracteres'
-                        secureTextEntry
-                        autoCapitalize='none'
-                        errorMessage={
-                            !password && errorMessage
-                                ? 'A senha deve ter pelo menos 6 caracteres'
-                                : null
-                        }
-                        showForgotPasswordButton={true}
-                        onPressForgotPassword={() => {}}
-                    />
-                </View>
-
-                <TouchableOpacity
-                    style={styles.Button}
-                    activeOpacity={0.6}
-                    onPress={handleLogin}
-                >
-                    <Icon
-                        name='lock-open-outline'
-                        size={15}
-                        color={'#1E9FF2'}
-                    />
-                    <Text style={styles.TitleButtonEnter}>Entrar</Text>
-                </TouchableOpacity>
-
-                <CustomLoading isLoading={isLoading} />
-
-                {errorMessage ===
-                    'As credenciais fornecidas estão incorretas.' && (
-                    <Text style={styles.error}>{errorMessage}</Text>
-                )}
+        <View style={styles.container}>
+            <View style={styles.ViewImage}>
+                <Image
+                    source={require('../../Images/logotipo.png')}
+                    resizeMode='contain'
+                    style={styles.image}
+                />
             </View>
-        </SafeAreaView>
+            <View style={styles.ViewInputs}>
+                <CustomInput
+                    label='Nome de usuário'
+                    value={userName}
+                    onChangeText={handleUserNameChange}
+                    placeholder='Usuário'
+                    keyboardType='email-address'
+                    autoCapitalize='none'
+                    errorMessage={
+                        !userName && errorMessage
+                            ? 'Digite um nome de usuário válido'
+                            : null
+                    }
+                />
+
+                <CustomInput
+                    label='Senha'
+                    value={password}
+                    onChangeText={handlePasswordChange}
+                    placeholder='Digite pelo menos 6 caracteres'
+                    secureTextEntry
+                    autoCapitalize='none'
+                    errorMessage={
+                        !password && errorMessage
+                            ? 'A senha deve ter pelo menos 6 caracteres'
+                            : null
+                    }
+                    showForgotPasswordButton={true}
+                    onPressForgotPassword={() => {}}
+                />
+            </View>
+
+            <TouchableOpacity
+                style={styles.Button}
+                activeOpacity={0.6}
+                onPress={handleLogin}
+            >
+                <Icon name='lock-open-outline' size={15} color={'#1E9FF2'} />
+                <Text style={styles.TitleButtonEnter}>Entrar</Text>
+            </TouchableOpacity>
+
+            <CustomLoading isLoading={isLoading} />
+
+            {errorMessage === 'As credenciais fornecidas estão incorretas.' && (
+                <Text style={styles.error}>{errorMessage}</Text>
+            )}
+        </View>
     );
 };
 

@@ -13,7 +13,6 @@ const authenticate = async (username, password, device) => {
         console.log(response.data);
 
         if (response.status === 200) {
-            Alert.alert('Login bem-sucedido!');
             return response.data;
         } else {
             console.error('Erro ao fazer login:', response.data.errors);

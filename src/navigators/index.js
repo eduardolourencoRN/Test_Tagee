@@ -11,32 +11,31 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
     const { isAuthenticated } = useAuth();
-    console.log(isAuthenticated);
 
     return (
         <NavigationContainer>
             <StatusBar backgroundColor={'#1E9FF2'} />
-            <Stack.Navigator>
-                {isAuthenticated ? (
-                    <>
-                        <Stack.Screen
-                            name='Schedulings'
-                            component={Schedulings}
-                            options={{ headerShown: false }}
-                        />
-                        <Stack.Screen
-                            name='DateDetailScreen'
-                            component={DateDetailScreen}
-                            options={{ headerShown: false }}
-                        />
-                    </>
-                ) : (
-                    <Stack.Screen
-                        name='LoginScreen'
-                        component={LoginScreen}
-                        options={{ headerShown: false }}
-                    />
-                )}
+            <Stack.Navigator
+                initialRouteName={
+                    isAuthenticated ? 'Schedulings' : 'LoginScreen'
+                }
+            >
+                <Stack.Screen
+                    name='Schedulings'
+                    component={Schedulings}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name='DateDetailScreen'
+                    component={DateDetailScreen}
+                    options={{ headerShown: false }}
+                />
+
+                <Stack.Screen
+                    name='LoginScreen'
+                    component={LoginScreen}
+                    options={{ headerShown: false }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
