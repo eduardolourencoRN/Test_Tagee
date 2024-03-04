@@ -75,7 +75,7 @@ const appointmentsData = [
     {
         date: '04/03/2024',
         time: '04:30 pm',
-        service: ['Corte', 'Barba', 'Botox'],
+        service: ['Corte de Cabelo', 'Barba', 'Botox'],
         clientName: 'José Otavio',
         professionalName: 'Ana',
     },

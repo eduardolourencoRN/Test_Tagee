@@ -18,7 +18,7 @@ const CustomAppointment = ({
     };
 
     return (
-        <View>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity
                 onPress={handleAppointmentPress}
                 activeOpacity={0.6}
@@ -95,7 +95,7 @@ const CustomAppointment = ({
         </View>
     );
 };
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 const styles = StyleSheet.create({
     appointmentContainer: {
         flexDirection: 'row',
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
     },
     appointmentItem: {
-        width: width / 1.4,
+        width: width / 1.3,
         height: 100,
         backgroundColor: '#ADD8E6',
         borderTopRightRadius: 5,
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
+        justifyContent: 'center',
     },
     appointmentItemIndicator: {
         width: 5,
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     ContainerTagService: {
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: '400',
         color: '#fff',
         marginBottom: 5,
